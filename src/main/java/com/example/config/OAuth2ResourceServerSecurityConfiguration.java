@@ -2,6 +2,7 @@ package com.example.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -14,6 +15,16 @@ public class OAuth2ResourceServerSecurityConfiguration extends WebSecurityConfig
 	private ALBTokenResolver resolver;
 
 	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// @formatter:off
+		web
+			.ignoring()
+				.antMatchers("/")
+		;
+		// @formatter:on
+	}
+
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http
@@ -22,7 +33,8 @@ public class OAuth2ResourceServerSecurityConfiguration extends WebSecurityConfig
 				.and()
 			.oauth2ResourceServer()
 				.bearerTokenResolver(resolver)
-				.jwt();
+				.jwt()
+		;
 		// @formatter:on
 	}
 }
