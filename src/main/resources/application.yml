@@ -1,1 +1,3 @@
-
+spring:
+  security:    oauth2:      resourceserver:        jwt:          jwk-set-uri: https://public-keys.auth.elb.us-west-2.amazonaws.com/
+logging:  level:    com.example: trace

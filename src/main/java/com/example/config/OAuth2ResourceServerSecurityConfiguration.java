@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.example.auth.ALBJwtDecoder;
 import com.example.auth.ALBTokenResolver;
 
 @EnableWebSecurity
@@ -13,6 +14,9 @@ public class OAuth2ResourceServerSecurityConfiguration extends WebSecurityConfig
 
 	@Autowired
 	private ALBTokenResolver resolver;
+
+	@Autowired
+	private ALBJwtDecoder decoder;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -34,6 +38,7 @@ public class OAuth2ResourceServerSecurityConfiguration extends WebSecurityConfig
 			.oauth2ResourceServer()
 				.bearerTokenResolver(resolver)
 				.jwt()
+					.decoder(decoder)
 		;
 		// @formatter:on
 	}
